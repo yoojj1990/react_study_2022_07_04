@@ -1,52 +1,60 @@
 import './App.css';
 
-function Header() {
+function Header(props) {
+  console.log('props', props, props.title);
   return (
     <header>
-      <h1><a href="/">REACT</a></h1>
-      <h1>IS GOOD!!</h1>
+      <h1><a href="/" onClick={(event)=>{
+        event.preventDefault();
+        props.onClickMode();
+      }}>{props.title}</a></h1>
     </header>
   );
 }
 
-function Nav() {
+function Nav(props) {
+
+  const list = []
+  for(let i=0;i<props.topics.length;i++) {
+    let dto = props.topics[i];
+    list.push(<li key={dto.id}><a id={dto.id} href={"/"+dto.id} onClick={(event)=>{
+      event.preventDefault();
+      props.onClickMode(event.target.id);
+    }}>{dto.title}</a></li>)
+  }
+
   return (
     <nav>
       <ol>
-        <li><a href="/">html</a></li>
-        <li><a href="/">css</a></li>
-        <li><a href="/">javascript</a></li>
+        {list}
       </ol>
     </nav>
   );
 }
 
-function Article() {
+function Article(props) {
+  console.log('props', props, props.title);
   return (
     <article>
-      <h2>Welcome</h2>
-      Hello, React
+      <h2>{props.title}</h2>
+      {props.body}
       <img src=''></img>
     </article>
   );
 }
 
-function Hello(props) {
-  return (
-    <div>
-      안녕하세요 저는 {props.name}입니다. 취미는 {props.habby}입니다.
-    </div>
-  );
-}
-
 function App() {
+  const topics = [
+    {id:1, title:"html", body:"html is Good"}, 
+    {id:2, title:"css", body:"css is Good"}, 
+    {id:3, title:"javascript", body:"javascript is Good"}
+  ]
+
   return (
     <div>
-      <Header></Header>
-      <Nav></Nav>
-      <Article></Article>
-      <Hello name="리엑트!" habby="운동"></Hello>
-      <Hello name="스프링!" habby="노래"></Hello>
+      <Header title="React!!" onClickMode={()=>{alert('React is Good!')}}></Header>
+      <Nav topics={topics} onClickMode={(id)=>{alert(id);}}></Nav>
+      <Article title="Welcome" body="Hello, React"></Article>
     </div>
   );
 }
