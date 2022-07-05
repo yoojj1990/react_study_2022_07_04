@@ -115,10 +115,15 @@ function App() {
     }
     content = <Article title={title} body={body}></Article>
 
-    controlText = <a href="/update" onClick={(event)=>{
+    controlText = <>
+      <a href="/update" onClick={(event)=>{
       event.preventDefault();
       setMode('Update');
-    }}>Update</a>
+      }}>Update</a><br/>
+      <a href='/delete' onClick={
+        const newTopics = []
+      }>Delete</a>
+      </>
 
   } else if(mode === "Welcome1") {
       content = <Article title="React!" body="React is Good"></Article>
